@@ -1,25 +1,22 @@
 from model.model import Model 
-from model.helpers import b64_to_pil, pil_to_b64
-import base64
-from PIL import Image
-import uuid
+from model.helpers import b64_to_pil
+from helpers import handle_gen_image_request, upload_image_to_firebase
+
 
 # load comfyui 
-IM_MODEL = Model(port=8188)
+IM_MODEL = Model(port=8188) # có bắt buộc là 8088 không? 
 IM_MODEL.load(ui_workflow="image_gen_workflow_api.json")
-test_input = { 
-  "type": "gen-image",
-  "workflow_values": {
-    "product_image": {"type": "image", "data": pil_to_b64(Image.open("data/replica-by-the-fireplice.jpg"))},
-    "product_positive_prompt" : "advertising photography of a bottle of perfume standing on water",
-    "product_negative_prompt" : "nsfw",
+gen_image_request = {
+    "product_image_link" : "https://storage.googleapis.com/snapad-12102024.appspot.com/output/uploaded_image.jpg",
+    "prompt" : "advertising photography of a bottle of perfume standing on water",
+    "light_type" : "whitelight",
     "object_keyword" : "bottle",
-    "iclight_positive_prompt" : "whitelight, advertising photography of a bottle of perfume standing on water",
-    "iclight_negative_prompt" : "black and white"
-  }
+    "save_id" : "1234569042740"
 }
-image_b64 = IM_MODEL.predict(test_input)['result'][-1]['data']
-image = b64_to_pil(image_b64)
-name = str(uuid.uuid4())[-15:]
-file_path = f"{name}.png"
-image.save(file_path)
+gen_image_values = handle_gen_image_request(gen_image_request)
+print(gen_image_values)
+image_b64 = IM_MODEL.predict(gen_image_values)['result'][-1]['data']
+file_path = f"{gen_image_request['save_id']}.jpg"
+b64_to_pil(image_b64).save(file_path)
+result_link = upload_image_to_firebase(file_path, f"output/{file_path}")
+print(f"Result uploaded to: {result_link}")
