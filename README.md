@@ -71,10 +71,10 @@ Document page: http://113.22.56.109:1403/
 curl -X POST "http://113.22.56.109:1403/gen-image" \
      -H "Content-Type: application/json" \
      -d '{
-           "product_image_link": "https://storage.googleapis.com/snapad-12102024.appspot.com/output/uploaded_image.jpg",
+           "product_image_link": "https://storage.googleapis.com/snapad-12102024.appspot.com/replica-perfume-by-the-fireplace.jpg",
            "prompt": "advertising photography of a bottle of perfume standing on water",
            "light_type": "whitelight",
            "object_keyword": "bottle",
-           "save_id": "your_save_id"
+           "save_id": "8724805740"
          }'
 ```
