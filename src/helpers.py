@@ -52,6 +52,19 @@ def handle_gen_image_request(gen_image_request: dict):
         }
     }
 
+def delete_file_in_folder(directory_path):
+    import os
+    import glob
+
+    # Get all files in the directory
+    files = glob.glob(os.path.join(directory_path, '*'))
+    for file in files:
+        try:
+            os.remove(file)
+            print(f"Deleted: {file}")
+        except Exception as e:
+            print(f"Error deleting {file}: {e}")
+
 # Example usage
 if __name__ == "__main__":
     # Upload image example

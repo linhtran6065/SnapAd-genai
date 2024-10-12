@@ -1,6 +1,6 @@
 from model.model import Model 
 from model.helpers import b64_to_pil
-from helpers import handle_gen_image_request, upload_image_to_firebase
+from helpers import handle_gen_image_request, upload_image_to_firebase, delete_file_in_folder
 import uuid
 import os 
 
@@ -25,5 +25,5 @@ result_link = upload_image_to_firebase(file_path, f"output/{file_path}")
 if os.path.exists(file_path):
     os.remove(file_path)
 if os.path.exists("data/ComfyUI/output/"):
-    os.remove("data/ComfyUI/output/*")
+    delete_file_in_folder("data/ComfyUI/output/")
 print(f"Result uploaded to: {result_link}")

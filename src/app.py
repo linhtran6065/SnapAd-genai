@@ -1,7 +1,7 @@
 from model.model import Model 
 from model.helpers import b64_to_pil
 from fastapi import FastAPI
-from helpers import handle_gen_image_request, upload_image_to_firebase
+from helpers import handle_gen_image_request, upload_image_to_firebase, delete_file_in_folder
 import os 
 
 # load comfyui 
@@ -23,7 +23,7 @@ async def gen_image(gen_image_request: dict):
     if os.path.exists(file_path):
         os.remove(file_path)
     if os.path.exists("data/ComfyUI/output/"):
-        os.remove("data/ComfyUI/output/*")
+        delete_file_in_folder("data/ComfyUI/output/")
     return  result_link
 
 if __name__ == "__main__":
