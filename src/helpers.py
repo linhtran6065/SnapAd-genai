@@ -29,7 +29,7 @@ def load_image_from_firebase(firebase_url: str):
         return base64_image
     else:
         raise Exception(f"Failed to download image from Firebase. Status code: {response.status_code}")
-    
+        
 def handle_gen_image_request(gen_image_request: dict):
     '''
     Example request:
