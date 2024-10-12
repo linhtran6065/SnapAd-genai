@@ -13,14 +13,12 @@ IM_MODEL.load(ui_workflow="image_gen_workflow_api.json")
 app = FastAPI()
 
 @app.post("/gen-image")
-async def gen_image(gen_image_request: dict | GenImageRequest):
-    print("Request:", gen_image_request)
-
+async def gen_image(gen_image_request: GenImageRequest):
     gen_image_values = handle_gen_image_request(gen_image_request.dict()) 
     image_b64 = IM_MODEL.predict(gen_image_values)['result'][-1]['data']
     file_path = f"{gen_image_request['save_id']}.jpg"
     b64_to_pil(image_b64).save(file_path)
-    
+
     result_link = upload_image_to_firebase(file_path, f"output/{file_path}")
 
     # delete uploaded files
