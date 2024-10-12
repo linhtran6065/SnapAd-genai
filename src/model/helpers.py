@@ -254,7 +254,7 @@ def convert_outputs_to_base64(node_id, file_name, file_data=None):
     if not file_data:
         file_type = file_name.split(".")[-1]
         file_type = file_type.lower()
-        filepath = os.path.join("ComfyUI", "output", file_name)
+        filepath = os.path.join(COMFYUI_DIR, "output", file_name)
         if file_type == "gif":
             return {
                 "node_id": node_id,

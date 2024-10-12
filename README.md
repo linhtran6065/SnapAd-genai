@@ -5,15 +5,15 @@ ssh -L 8188:127.0.0.1:8188 tludemo@113.22.56.109
 
 # create virtual env
 conda deactivate
-conda create --name snapad
+conda create --name snapad python=3.10
 conda activate snapad
 
 # set up comfyui
 pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu121
-git clone https://github.com/comfyanonymous/ComfyUI.git
-cd ComfyUI
+# git clone https://github.com/comfyanonymous/ComfyUI.git
+# cd ComfyUI
 pip install -r requirements.txt
-pip install onnxruntime-gpu
+# pip install onnxruntime-gpu
 
 # download custom nodes
 cd custom_nodes/

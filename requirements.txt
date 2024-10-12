@@ -2,7 +2,7 @@ fastapi
 requests
 websocket-client==1.6.4
 accelerate==0.23.0
-torch
+torch 
 torchsde
 torchvision
 torchaudio
