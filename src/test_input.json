@@ -1,0 +1,11 @@
+{ 
+  "type": "gen-image",
+  "workflow_values": {
+    "product_image" : "data/replica-by-the-fireplice.jpg",
+    "product_positive_prompt" : "advertising photography of a bottle of perfume standing on water",
+    "product_negative_prompt" : "nsfw",
+    "object_keyword" : "bottle",
+    "iclight_positive_prompt" : "whitelight, advertising photography of a bottle of perfume standing on water",
+    "iclight_negative_prompt" : "black and white"
+  }
+}

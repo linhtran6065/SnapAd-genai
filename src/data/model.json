@@ -1,0 +1,14 @@
+[
+  {
+    "url": "https://huggingface.co/Justin-Choo/epiCRealism-Natural_Sin_RC1_VAE/resolve/main/epicrealism_naturalSinRC1VAE.safetensors",
+    "path": "models/checkpoints/epicrealism_naturalSinRC1VAE.safetensors"
+  },
+  {
+      "url": "https://huggingface.co/comfyanonymous/ControlNet-v1-1_fp16_safetensors/resolve/main/control_v11f1p_sd15_depth_fp16.safetensors",
+      "path": "models/controlnet/control_v11f1p_sd15_depth_fp16.safetensors"
+  },
+  {
+    "url": "https://huggingface.co/lllyasviel/ic-light/resolve/main/iclight_sd15_fc.safetensors",
+    "path": "models/diffusion_models/IC-Light/iclight_sd15_fc.safetensors"
+  }
+]
