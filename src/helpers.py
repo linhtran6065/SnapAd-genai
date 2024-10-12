@@ -68,7 +68,7 @@ def delete_file_in_folder(directory_path):
 if __name__ == "__main__":
     # Upload image example
     local_file = "data/replica-by-the-fireplice.jpg"
-    uploaded_url = upload_image_to_firebase(local_file, "output/uploaded_image.jpg")
+    uploaded_url = upload_image_to_firebase(local_file, "replica-perfume-by-the-fireplace.jpg")
     print(f"Uploaded image URL: {uploaded_url}")
 
     # # Load image example

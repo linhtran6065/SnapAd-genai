@@ -3,7 +3,7 @@ import uuid
 
 # Define the request payload
 gen_image_request = {
-    "product_image_link": "https://storage.googleapis.com/snapad-12102024.appspot.com/output/uploaded_image.jpg",
+    "product_image_link": "https://storage.googleapis.com/snapad-12102024.appspot.com/replica-perfume-by-the-fireplace.jpg",
     "prompt": "advertising photography of a bottle of perfume standing on water",
     "light_type": "whitelight",
     "object_keyword": "bottle",
