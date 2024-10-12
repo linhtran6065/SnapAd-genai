@@ -10,5 +10,41 @@
   {
     "url": "https://huggingface.co/lllyasviel/ic-light/resolve/main/iclight_sd15_fc.safetensors",
     "path": "models/diffusion_models/IC-Light/iclight_sd15_fc.safetensors"
+  },
+  {
+    "url": "https://github.com/ltdrdata/ComfyUI-Impact-Pack.git",
+    "path": "custom_nodes"
+  },
+  {
+    "url": "https://github.com/Fannovel16/comfyui_controlnet_aux.git",
+    "path": "custom_nodes"
+  },
+  {
+    "url": "https://github.com/WASasquatch/was-node-suite-comfyui.git",
+    "path": "custom_nodes"
+  },
+  {
+    "url": "https://github.com/sipherxyz/comfyui-art-venture.git",
+    "path": "custom_nodes"
+  },
+  {
+    "url": "https://github.com/jamesWalker55/comfyui-various.git",
+    "path": "custom_nodes"
+  },
+  {
+    "url": "https://github.com/cubiq/ComfyUI_essentials.git",
+    "path": "custom_nodes"
+  },
+  {
+    "url": "https://github.com/kijai/ComfyUI-KJNodes.git",
+    "path": "custom_nodes"
+  },
+  {
+    "url": "https://github.com/kijai/ComfyUI-IC-Light.git",
+    "path": "custom_nodes"
+  },
+  {
+    "url": "https://github.com/storyicon/comfyui_segment_anything.git",
+    "path": "custom_nodes"
   }
 ]

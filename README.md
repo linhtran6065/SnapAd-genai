@@ -10,10 +10,7 @@ conda activate snapad
 
 # set up comfyui
 pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu121
-# git clone https://github.com/comfyanonymous/ComfyUI.git
-# cd ComfyUI
 pip install -r requirements.txt
-# pip install onnxruntime-gpu
 
 # download custom nodes
 cd custom_nodes/
