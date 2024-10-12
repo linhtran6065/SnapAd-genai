@@ -11,6 +11,16 @@ class GenImageRequest(BaseModel):
     light_type: str
     object_keyword: str
     save_id: str
+    class Config:
+        schema_extra = {
+            "example": {
+                "product_image_link": "https://storage.googleapis.com/snapad-12102024.appspot.com/output/uploaded_image.jpg",
+                "prompt": "advertising photography of a bottle of perfume standing on water",
+                "light_type": "whitelight",
+                "object_keyword": "bottle",
+                "save_id": "ahihihihihihi"
+            }
+        }
 
 def handle_gen_image_request(gen_image_request: dict | GenImageRequest):
     return { 

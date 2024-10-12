@@ -2,6 +2,7 @@
 ```bash
 # connect to machine
 ssh -L 8188:127.0.0.1:8188 tludemo@113.22.56.109
+ssh tludemo@113.22.56.109
 
 # create virtual env
 conda deactivate
