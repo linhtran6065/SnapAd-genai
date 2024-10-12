@@ -23,7 +23,7 @@ class GenImageRequest(BaseModel):
             }
         }
 
-def handle_gen_image_request(gen_image_request: GenImageRequest):
+def handle_gen_image_request(gen_image_request: dict):
     return { 
         "workflow_values": {
             "product_image": {"type": "image", "data": load_image_from_firebase(gen_image_request['product_image_link'])},
