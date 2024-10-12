@@ -1,5 +1,6 @@
 fastapi
 requests
+uvicorn
 websocket-client==1.6.4
 accelerate==0.23.0
 torch 
@@ -26,3 +27,4 @@ firebase_admin
 kornia>=0.7.1
 spandrel
 soundfile
+pydantic

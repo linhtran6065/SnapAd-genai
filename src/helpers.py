@@ -3,7 +3,28 @@ from firebase_admin import credentials, storage
 import requests
 from io import BytesIO
 import base64
+from pydantic import BaseModel
 
+class GenImageRequest(BaseModel):
+    product_image_link: str
+    prompt: str
+    light_type: str
+    object_keyword: str
+    save_id: str
+
+def handle_gen_image_request(gen_image_request: dict | GenImageRequest):
+    return { 
+        "workflow_values": {
+            "product_image": {"type": "image", "data": load_image_from_firebase(gen_image_request['product_image_link'])},
+            "product_positive_prompt" : gen_image_request['prompt'],
+            "product_negative_prompt" : "nsfw",
+            "object_keyword" : gen_image_request['object_keyword'],
+            "iclight_positive_prompt" : f"{gen_image_request['light_type']}, {gen_image_request['prompt']}",
+            "iclight_negative_prompt" : "black and white"
+        }
+    }
+
+# ---- Firebase handle --------------
 # Initialize Firebase app
 cred = credentials.Certificate("data/snapad-firebase-adminsdk.json") 
 firebase_admin.initialize_app(cred, {
@@ -29,28 +50,7 @@ def load_image_from_firebase(firebase_url: str):
         return base64_image
     else:
         raise Exception(f"Failed to download image from Firebase. Status code: {response.status_code}")
-        
-def handle_gen_image_request(gen_image_request: dict):
-    '''
-    Example request:
-    {
-        "product_image_link" : "https://storage.googleapis.com/snapad-12102024.appspot.com/output/uploaded_image.jpg",
-        "prompt" : "advertising photography of a bottle of perfume standing on water",
-        "light_type" : "whitelight",
-        "object_keyword" : "bottle",
-        "save_id" : "1234569042740"
-    }
-    '''
-    return { 
-        "workflow_values": {
-            "product_image": {"type": "image", "data": load_image_from_firebase(gen_image_request['product_image_link'])},
-            "product_positive_prompt" : gen_image_request['prompt'],
-            "product_negative_prompt" : "nsfw",
-            "object_keyword" : gen_image_request['object_keyword'],
-            "iclight_positive_prompt" : f"{gen_image_request['light_type']}, {gen_image_request['prompt']}",
-            "iclight_negative_prompt" : "black and white"
-        }
-    }
+# ----------------------------------- 
 
 def delete_file_in_folder(directory_path):
     import os
