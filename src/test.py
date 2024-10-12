@@ -5,7 +5,7 @@ from PIL import Image
 import uuid
 
 # load comfyui 
-IM_MODEL = Model(port=8088)
+IM_MODEL = Model(port=8188)
 IM_MODEL.load(ui_workflow="image_gen_workflow_api.json")
 test_input = { 
   "type": "gen-image",
