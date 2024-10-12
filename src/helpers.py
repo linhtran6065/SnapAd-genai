@@ -12,18 +12,7 @@ class GenImageRequest(BaseModel):
     object_keyword: str
     save_id: str
 
-    class Config:
-        schema_extra = {
-            "example": {
-                "product_image_link": "https://example.com/image.jpg",
-                "prompt": "advertising photography of a bottle of perfume standing on water",
-                "light_type": "whitelight",
-                "object_keyword": "bottle",
-                "save_id": "1234567890"
-            }
-        }
-
-def handle_gen_image_request(gen_image_request: GenImageRequest):
+def handle_gen_image_request(gen_image_request: dict):
     return { 
         "workflow_values": {
             "product_image": {"type": "image", "data": load_image_from_firebase(gen_image_request['product_image_link'])},
