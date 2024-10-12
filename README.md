@@ -34,11 +34,17 @@ wget -P models/controlnet/ https://huggingface.co/comfyanonymous/ControlNet-v1-1
 mkdir models/diffusion_models/IC-Light/
 wget -P models/diffusion_models/IC-Light/ https://huggingface.co/lllyasviel/ic-light/resolve/main/iclight_sd15_fc.safetensors
 
+# expose fastapi port 
+sudo ufw allow 1403
 ```
 
 ```python
 # run comfyui
 python3 main.py --listen --port 8188
+
+python3 app.py
+# run api
+
 ```
 
 ### **Input to workflow**

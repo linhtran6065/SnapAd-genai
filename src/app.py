@@ -28,5 +28,5 @@ async def gen_image(gen_image_request: dict):
 
 if __name__ == "__main__":
     import uvicorn
-    # expose 1403 
+    # expose 1403, 8188
     uvicorn.run(app, host="0.0.0.0", port=1403) # fastapi app will be running at port 1403

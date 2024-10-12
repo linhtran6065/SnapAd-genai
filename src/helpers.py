@@ -61,7 +61,6 @@ def delete_file_in_folder(directory_path):
     for file in files:
         try:
             os.remove(file)
-            print(f"Deleted: {file}")
         except Exception as e:
             print(f"Error deleting {file}: {e}")
 
