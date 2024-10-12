@@ -65,6 +65,8 @@ python3 app.py
 
 
 ### **Call api example**
+Document page: http://113.22.56.109:1403/
+
 ```bash
 curl -X POST "http://113.22.56.109:1403/gen-image" \
      -H "Content-Type: application/json" \
