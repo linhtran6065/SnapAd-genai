@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from helpers import handle_gen_image_request, upload_image_to_firebase
 
 # load comfyui 
-IM_MODEL = Model(port=8088)
+IM_MODEL = Model(port=8188)
 IM_MODEL.load(ui_workflow="image_gen_workflow_api.json")
 
 # Initialize FastAPI app
