@@ -1,35 +1,24 @@
 import firebase_admin
 from firebase_admin import credentials, storage
-import requests
-from io import BytesIO
 import base64
-from pydantic import BaseModel
-
-class GenImageRequest(BaseModel):
-    product_image_link: str
-    prompt: str
-    light_type: str
-    object_keyword: str
-    save_id: str
+from io import BytesIO
 
 def handle_gen_image_request(gen_image_request: dict):
     return { 
         "workflow_values": {
-            "product_image": {"type": "image", "data": load_image_from_firebase(gen_image_request['product_image_link'])},
-            "product_positive_prompt" : gen_image_request['prompt'],
-            "product_negative_prompt" : "nsfw",
-            "object_keyword" : gen_image_request['object_keyword'],
-            "iclight_positive_prompt" : f"{gen_image_request['light_type']}, {gen_image_request['prompt']}",
-            "iclight_negative_prompt" : "black and white"
+            "product_image": {"type": "image", "data": base64.b64encode(gen_image_request['product_image_data']).decode('utf-8')},
+            "product_positive_prompt": gen_image_request['prompt'],
+            "product_negative_prompt": "nsfw",
+            "object_keyword": gen_image_request['object_keyword'],
+            "iclight_positive_prompt": f"{gen_image_request['light_type']}, {gen_image_request['prompt']}",
+            "iclight_negative_prompt": "black and white",
         }
     }
 
 # ---- Firebase handle --------------
 # Initialize Firebase app
 cred = credentials.Certificate("data/snapad-firebase-adminsdk.json") 
-firebase_admin.initialize_app(cred, {
-    'storageBucket': 'snapad-12102024.appspot.com'  
-})
+firebase_admin.initialize_app(cred, {'storageBucket': 'snapad-12102024.appspot.com'})
 
 def upload_image_to_firebase(local_file_path: str, firebase_file_name: str) -> str:
     bucket = storage.bucket()
