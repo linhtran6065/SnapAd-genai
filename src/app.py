@@ -1,7 +1,7 @@
 from model.model import Model
 from model.helpers import b64_to_pil
-from fastapi import FastAPI, Form, File, UploadFile, HTTPException
-from fastapi.responses import RedirectResponse, JSONResponse
+from fastapi import FastAPI, Form, File, UploadFile, HTTPException, BackgroundTasks
+from fastapi.responses import RedirectResponse
 from helpers import handle_gen_image_request, upload_image_to_firebase, delete_file_in_folder
 import os
 import uuid
@@ -17,42 +17,14 @@ app = FastAPI()
 # Job storage to track job statuses
 job_status_store: Dict[str, Dict] = {}
 
-@app.post("/gen-image/jobs", status_code=201)
-async def create_image_job(
-    product_image: UploadFile = File(...),
-    prompt: str = Form(...),
-    light_type: str = Form(...),
-    object_keyword: str = Form(...),
-    save_id: str = Form(...)
-):
-    # Generate unique job ID
-    job_id = str(uuid.uuid4())
-
-    # Save initial job status
-    job_status_store[job_id] = {
-        "status": "processing",
-        "result": None,
-        "error": None
-    }
-
-    # Process the job asynchronously
+def process_image_job(job_id: str, gen_image_request: dict):
     try:
-        # Read the uploaded image
-        image_data = await product_image.read()
-        gen_image_request = {
-            "product_image_data": image_data,
-            "prompt": prompt,
-            "light_type": light_type,
-            "object_keyword": object_keyword,
-            "save_id": save_id,
-        }
-
         # Call the model and generate the image
         gen_image_values = handle_gen_image_request(gen_image_request)
         image_b64 = IM_MODEL.predict(gen_image_values)['result'][-1]['data']
 
         # Save the image locally
-        file_path = f"{save_id}.jpg"
+        file_path = f"{gen_image_request['save_id']}.jpg"
         b64_to_pil(image_b64).save(file_path)
 
         # Upload the image to Firebase
@@ -72,7 +44,40 @@ async def create_image_job(
         job_status_store[job_id]["status"] = "failed"
         job_status_store[job_id]["error"] = str(e)
 
-    return {"job_id": job_id}
+@app.post("/gen-image/jobs", status_code=201)
+async def create_image_job(
+    background_tasks: BackgroundTasks,
+    product_image: UploadFile = File(...),
+    prompt: str = Form(...),
+    light_type: str = Form(...),
+    object_keyword: str = Form(...),
+    save_id: str = Form(...)
+):
+    # Generate unique job ID
+    job_id = str(uuid.uuid4())
+
+    # Save initial job status
+    job_status_store[job_id] = {
+        "status": "processing",
+        "result": None,
+        "error": None
+    }
+
+    # Read the uploaded image
+    image_data = await product_image.read()
+    gen_image_request = {
+        "product_image_data": image_data,
+        "prompt": prompt,
+        "light_type": light_type,
+        "object_keyword": object_keyword,
+        "save_id": save_id,
+    }
+
+    # Add the job to the background tasks
+    background_tasks.add_task(process_image_job, job_id, gen_image_request)
+
+    # Return the job ID immediately
+    return {"job_id": job_id, "status": "processing"}
 
 @app.get("/gen-image/jobs/{job_id}/status", status_code=200)
 async def get_image_job_status(job_id: str):
