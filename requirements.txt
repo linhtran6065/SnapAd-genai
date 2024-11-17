@@ -28,3 +28,4 @@ kornia>=0.7.1
 spandrel
 soundfile
 pydantic
+python-multipart

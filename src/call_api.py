@@ -1,39 +1,36 @@
 import requests
 import uuid
 
-# Define the request payload
-gen_image_request = {
-    "product_image_link": "https://storage.googleapis.com/snapad-12102024.appspot.com/replica-perfume-by-the-fireplace.jpg",
-    "prompt": "advertising photography of a bottle of perfume standing on water",
-    "light_type": "whitelight",
+# Define the file path and form data
+file_path = "/Users/linhtran92/Desktop/PTIT/SnapAd-genai/src/data/innisfree-green-tea-cleansing-oil.jpg"
+form_data = {
+    "prompt": "advertising photography of a bottle of cleansing oil on a wood table",
+    "light_type": "softlight",
     "object_keyword": "bottle",
     "save_id": str(uuid.uuid4())[-15:]
 }
 
-# Send the POST request to the FastAPI server
-response = requests.post("http://113.22.56.109:1403/gen-image", json=gen_image_request)
+# Open the image file and send the POST request
+with open(file_path, "rb") as image_file:
+    response = requests.post(
+        "http://113.22.56.109:1403/gen-image/jobs",
+        files={"product_image": image_file},
+        data=form_data
+    )
 
 # Print the response from the server
-print(response.json())
-
-
-'''
-curl -X POST "http://113.22.56.109:1403/gen-image" \
-     -H "Content-Type: application/json" \
-     -d '{
-           "product_image_link": "https://storage.googleapis.com/snapad-12102024.appspot.com/replica-perfume-by-the-fireplace.jpg",
-           "prompt": "advertising photography of a bottle of perfume standing on a wood table",
-           "light_type": "whitelight",
-           "object_keyword": "bottle",
-           "save_id": "1234567890"
-         }'
-'''
+if response.status_code == 201:
+    print("Job created successfully!")
+    print(response.json())  # Should contain the job_id
+else:
+    print(f"Failed to create job. Status code: {response.status_code}")
+    print(response.json())
 
 '''
-curl -X POST "http://127.0.0.1:1403/gen-image" \
--F "product_image=@path/to/your/image.jpg" \
--F "prompt=advertising photography of a bottle of perfume standing on water" \
--F "light_type=whitelight" \
+curl -X POST "http://113.22.56.109:1403/gen-image/jobs" \
+-F "product_image=@/Users/linhtran92/Desktop/PTIT/SnapAd-genai/src/data/innisfree-green-tea-cleansing-oil.jpg" \
+-F "prompt=advertising photography of a bottle of cleansing oil on a wood table" \
+-F "light_type=softlight" \
 -F "object_keyword=bottle" \
--F "save_id=1234569042740"
+-F "save_id=171103"
 '''
