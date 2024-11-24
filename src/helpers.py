@@ -21,15 +21,23 @@ cred = credentials.Certificate("data/snapad-firebase-adminsdk.json")
 firebase_admin.initialize_app(cred, {'storageBucket': 'snapad-12102024.appspot.com'})
 
 def upload_image_to_firebase(local_file_path: str, firebase_file_name: str) -> str:
-    bucket = storage.bucket()
-    blob = bucket.blob(firebase_file_name)
-    blob.upload_from_filename(local_file_path)
+    try:
+        bucket = storage.bucket()
+        blob = bucket.blob(firebase_file_name)
+        blob.upload_from_filename(local_file_path)
+        blob.make_public()
 
-    # Make the image publicly accessible
-    blob.make_public()
+        # Confirm the upload
+        if blob.exists():
+            print(f"Image uploaded to Firebase Storage: {blob.public_url}")
+            return blob.public_url
+        else:
+            print("Upload failed: File does not exist in the bucket.")
+            return ""
+    except Exception as e:
+        print(f"Error uploading image to Firebase: {e}")
+        return ""
 
-    print(f"Image uploaded to Firebase Storage: {blob.public_url}")
-    return blob.public_url
 
 def load_image_from_firebase(firebase_url: str):
     response = requests.get(firebase_url)
