@@ -32,9 +32,9 @@ curl -X POST "http://113.22.56.109:1403/gen-image/jobs" \
 -F "prompt=advertising photography of a bottle of cleansing oil on a wood table" \
 -F "light_type=softlight" \
 -F "object_keyword=bottle" \
--F "save_id=171106"
+-F "save_id=171106123"
 '''
 
 '''
-curl -X GET "http://113.22.56.109:1403/gen-image/jobs/fe2512ba-e903-489f-8915-3ad469cbc8b3/status"
+curl -X GET "http://113.22.56.109:1403/gen-image/jobs/e0a529d2-294b-4631-8e9e-3a91c16c05fc/status"
 '''
