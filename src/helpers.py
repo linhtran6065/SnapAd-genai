@@ -61,6 +61,23 @@ def delete_file_in_folder(directory_path):
         except Exception as e:
             print(f"Error deleting {file}: {e}")
 
+def check_file_exists_firebase(firebase_path: str) -> bool:
+    """Check if a file exists in Firebase Storage.
+    
+    Args:
+        firebase_path (str): Path to file in Firebase Storage
+        
+    Returns:
+        bool: True if file exists, False otherwise
+    """
+    try:
+        bucket = storage.bucket()
+        blob = bucket.blob(firebase_path)
+        return blob.exists()
+    except Exception as e:
+        print(f"Error checking file existence in Firebase: {e}")
+        return False
+
 # Example usage
 if __name__ == "__main__":
     # Upload image example
@@ -72,3 +89,20 @@ if __name__ == "__main__":
     # firebase_image_url = uploaded_url  
     # image_dat_base64 = load_image_from_firebase(firebase_image_url)
     # print("Image downloaded successfully")
+
+def get_firebase_blob_url(firebase_path: str) -> str:
+    """Get public URL for a Firebase Storage blob.
+    
+    Args:
+        firebase_path (str): Path to file in Firebase Storage
+        
+    Returns:
+        str: Public URL of the blob, empty string if error
+    """
+    try:
+        bucket = storage.bucket()
+        blob = bucket.blob(firebase_path)
+        return blob.public_url if blob.exists() else ""
+    except Exception as e:
+        print(f"Error getting blob URL: {e}")
+        return ""
