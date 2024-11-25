@@ -6,6 +6,7 @@ from helpers import handle_gen_image_request, upload_image_to_firebase, delete_f
 import os
 import uuid
 from typing import Dict
+import time
 
 # Load ComfyUI
 IM_MODEL = Model(port=8188)
@@ -53,6 +54,8 @@ async def create_image_job(
     object_keyword: str = Form(...),
     save_id: str = Form(...)
 ):
+    startTime = time.time()
+    print(f"Received request for prompt: {prompt}, light_type: {light_type}, object_keyword: {object_keyword}, save_id: {save_id}")
     # Generate unique job ID
     job_id = str(uuid.uuid4())
 
@@ -76,17 +79,22 @@ async def create_image_job(
     # Add the job to the background tasks
     background_tasks.add_task(process_image_job, job_id, gen_image_request)
 
+    print(f"Time taken: {time.time() - startTime} for job_id: {job_id}")
     # Return the job ID immediately
     return {"job_id": job_id, "status": "processing"}
 
 @app.get("/gen-image/jobs/{job_id}/status", status_code=200)
 async def get_image_job_status(job_id: str):
+    startTime = time.time()
     # Check if job exists
     if job_id not in job_status_store:
+        print(f"Time taken: {time.time() - startTime}")
         raise HTTPException(status_code=404, detail="Job not found")
 
     # Return the current status of the job
-    return job_status_store[job_id]
+    data = job_status_store[job_id]
+    print(f"Time taken: {time.time() - startTime} for job_id: {job_id} and status: {data['status']}")
+    return data
 
 @app.get("/")
 async def redirect_to_docs():
