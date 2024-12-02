@@ -90,8 +90,8 @@
       "subtract_original": 0,
       "grow_with_blur": 1.8,
       "feature_threshold": 0,
-      "z_front": 0.98,
-      "z_back": 0.5,
+      "z_front": 1.0,
+      "z_back": 0.4,
       "feature_param": "both",
       "feature_mode": "squeeze",
       "masks": [

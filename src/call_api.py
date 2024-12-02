@@ -41,7 +41,7 @@ curl -X GET "http://113.22.56.109:1403/gen-image/jobs/052ad3be-62a5-464d-b2c4-ae
 
 '''
 curl -X POST "http://172.22.179.106:1403/gen-video" \
--F "product_image=@/Users/linhtran92/Desktop/PTIT/SnapAd-genai/src/data/replica-by-the-fireplice.jpg" \
--F "prompt=flowing liquid gold" \
--F "save_id=031201"
+-F "product_image=@/Users/linhtran92/Desktop/innisfree.png" \
+-F "prompt=water flows" \
+-F "save_id=031202"
 '''
