@@ -34,7 +34,7 @@ class InternalRoutes:
 
         @self.routes.get('/logs')
         async def get_logs(request):
-            return web.json_response(app.logger.get_logs())
+            return web.json_response(gen_image.logger.get_logs())
 
         @self.routes.get('/folder_paths')
         async def get_folder_paths(request):

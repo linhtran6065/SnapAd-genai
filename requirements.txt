@@ -29,3 +29,5 @@ spandrel
 soundfile
 pydantic
 python-multipart
+omegaconf
+wandb
