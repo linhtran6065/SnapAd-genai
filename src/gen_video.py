@@ -2,7 +2,7 @@ from model.model import Model
 from model.helpers import b64_to_pil
 from fastapi import FastAPI, Form, File, UploadFile
 from fastapi.responses import RedirectResponse
-from helpers import handle_gen_video_request, upload_image_to_firebase, delete_file_in_folder
+from helpers import handle_gen_video_request, upload_image_to_firebase, delete_file_in_folder, b64_to_video
 import os
 
 # Load comfyui
@@ -26,9 +26,9 @@ async def gen_image(
         "save_id": save_id,
     }
     gen_video_values = handle_gen_video_request(gen_video_request)
-    video_b64 = VI_MODEL.predict(gen_video_values)['result'][-1]['data']
+    video_b64 = VI_MODEL.predict(gen_video_values)['result'][-1]['data'] # ok đến đây rồi 
     file_path = f"{save_id}.mp4"
-    b64_to_pil(video_b64).save(file_path)
+    b64_to_video(video_b64, file_path)
 
     result_link = upload_image_to_firebase(file_path, f"output/{file_path}")
 
