@@ -40,8 +40,11 @@ curl -X GET "http://113.22.56.109:1403/gen-image/jobs/052ad3be-62a5-464d-b2c4-ae
 '''
 
 '''
-curl -X POST "http://172.22.179.106:1403/gen-video" \
+curl -X POST "http://172.22.179.106:1403/gen-video/jobs" \
 -F "product_image=@/Users/linhtran92/Desktop/innisfree.png" \
--F "prompt=water flows" \
--F "save_id=031202"
+-F "prompt=ice frozen" 
+'''
+
+'''
+curl -X GET "http://172.22.179.106:1403/gen-video/jobs/67b0904e-b800-4973-a919-c4efed5e6088/status"
 '''
