@@ -3,6 +3,7 @@ from firebase_admin import credentials, storage
 import base64
 from io import BytesIO
 
+
 def handle_gen_image_request(gen_image_request: dict):
     return { 
         "workflow_values": {
@@ -117,6 +118,6 @@ def get_firebase_blob_url(firebase_path: str) -> str:
         return ""
     
 def b64_to_video(b64_str, file_path):
-    video_data = base64.b64decode(b64_str.replace(BASE64_PREAMBLE, ""))
+    video_data = base64.b64decode(b64_str.replace("data:video/mp4;base64,", ""))
     with open(file_path, "wb") as video_file:
         video_file.write(video_data)
