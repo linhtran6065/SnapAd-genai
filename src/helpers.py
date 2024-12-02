@@ -115,3 +115,8 @@ def get_firebase_blob_url(firebase_path: str) -> str:
     except Exception as e:
         print(f"Error getting blob URL: {e}")
         return ""
+    
+def b64_to_video(b64_str, file_path):
+    video_data = base64.b64decode(b64_str.replace(BASE64_PREAMBLE, ""))
+    with open(file_path, "wb") as video_file:
+        video_file.write(video_data)
