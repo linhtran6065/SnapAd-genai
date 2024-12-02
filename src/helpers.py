@@ -15,6 +15,15 @@ def handle_gen_image_request(gen_image_request: dict):
         }
     }
 
+def handle_gen_video_request(gen_video_request: dict):
+    return { 
+        "workflow_values": {
+            "product_image": {"type": "image", "data": base64.b64encode(gen_video_request['product_image_data']).decode('utf-8')},
+            "motion_positive_prompt": gen_video_request['prompt'],
+            "motion_negative_prompt": "nsfw",
+        }
+    }
+
 # ---- Firebase handle --------------
 # Initialize Firebase app
 cred = credentials.Certificate("data/snapad-firebase-adminsdk.json") 
